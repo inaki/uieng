@@ -199,7 +199,7 @@ const Hero = ({
               Senior UI Engineer @ RunLLM
             </p>
             <h1 className="font-display text-3xl font-bold text-ink sm:text-4xl">
-              Imanol Aranzadi
+              Iñaki Aranzadi
             </h1>
             <p className="max-w-xl text-ink/80">
               I craft AI-forward, reliable interfaces that feel
@@ -301,7 +301,7 @@ function App() {
           <div className="grid gap-6 sm:grid-cols-[1.4fr_1fr]">
             <div className="space-y-4 text-ink/80">
               <p>
-                I’m Imanol Aranzadi, a UI engineer crafting digital experiences
+                I’m Iñaki Aranzadi, a UI engineer crafting digital experiences
                 that feel like the best parts of early personal
                 computing—colorful, curious, and deeply usable. I pair with
                 design and product to turn complex AI-driven ideas into
