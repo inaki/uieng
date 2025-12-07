@@ -6,11 +6,16 @@ type Props = {
   badge: string;
   title: string;
   children: ReactNode;
+  dataTestId?: string;
 };
 
-export const Section = ({ id, badge, title, children }: Props) => {
+export const Section = ({ id, badge, title, children, dataTestId }: Props) => {
   return (
-    <section id={id} className="scroll-mt-28 py-14 sm:py-20">
+    <section
+      id={id}
+      data-testid={dataTestId ?? `section-${id}`}
+      className="scroll-mt-28 py-14 sm:py-20"
+    >
       <div className="mx-auto flex max-w-5xl flex-col gap-8 px-4">
         <div className="flex items-center gap-3">
           <span className="rounded-full bg-ink px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-lemon">

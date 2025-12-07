@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { CanvasPlayground } from "./components/CanvasPlayground";
 import { Card } from "./components/Card";
@@ -18,7 +19,8 @@ const experiences = [
     title: "Senior UI Engineer — RunLLM",
     subtitle:
       "Building AI-forward UI with React + Mantine and intuitive flows for complex products.",
-    meta: "Jan 2025 – Present • SF Bay Area (Hybrid)",
+    metaDate: "Jan 2025 – Present",
+    metaPlace: "SF Bay Area",
     points: [
       "Lead UI for AI-driven experiences; collaborate closely with engineering to ship responsive interfaces",
       "Translate advanced AI interactions into approachable, polished UX",
@@ -28,7 +30,8 @@ const experiences = [
     title: "Senior Frontend Engineer — Joy (Contract)",
     subtitle:
       "Wedding planning platform across React/TypeScript, GraphQL, and AngularJS.",
-    meta: "Feb 2022 – Oct 2022 • Remote",
+    metaDate: "Feb 2022 – Oct 2022",
+    metaPlace: "Remote",
     points: [
       "Built features and maintained design system with Storybook and Styled Systems",
       "Streamlined delivery with CircleCI, GitHub Actions, and GraphQL services",
@@ -38,7 +41,8 @@ const experiences = [
     title: "Senior Frontend Engineer — Williams-Sonoma (Contract)",
     subtitle:
       "Design system + component library for all brands using Vue + Tailwind.",
-    meta: "Jul 2021 – Feb 2022 • SF Bay Area",
+    metaDate: "Jul 2021 – Feb 2022",
+    metaPlace: "SF Bay Area",
     points: [
       "Built and documented reusable components with TypeScript, Vue, and Tailwind CSS",
       "Partnered with teams to integrate the system via Jenkins and CircleCI pipelines",
@@ -47,7 +51,8 @@ const experiences = [
   {
     title: "Senior Frontend Engineer — NextRequest (Contract)",
     subtitle: "Led frontend and design system migration using Vue + Vuex.",
-    meta: "Jan 2020 – Jul 2021 • SF Bay Area",
+    metaDate: "Jan 2020 – Jul 2021",
+    metaPlace: "Remote",
     points: [
       "Maintained npm packages and Bulma-based design system for the platform",
       "Established Storybook, Chromatic, and Cypress to boost quality gates",
@@ -56,7 +61,8 @@ const experiences = [
   {
     title: "Senior UI / Frontend Engineer — Afterpay Touch",
     subtitle: "Consumer Growth team for React Native iOS/Android apps.",
-    meta: "Mar 2019 – Oct 2019 • SF Bay Area",
+    metaDate: "Mar 2019 – Oct 2019",
+    metaPlace: "SF Bay Area",
     points: [
       "Built mobile UI with JavaScript, Tachyons CSS, and Redux/Redux Thunk",
       "Contributed to design system workstreams for North America, UK, and Oceania apps",
@@ -65,7 +71,8 @@ const experiences = [
   {
     title: "Senior UI/Frontend Engineer — Walmart Labs",
     subtitle: "Internal tools and replenishment systems with React + Redux.",
-    meta: "Mar 2018 – Nov 2018 • SF Bay Area",
+    metaDate: "Mar 2018 – Nov 2018",
+    metaPlace: "SF Bay Area",
     points: [
       "Developed efficiency apps with React, Sass, ElectronJS, and Node",
       "Led UI design/build for internal tooling across teams",
@@ -74,7 +81,8 @@ const experiences = [
   {
     title: "Senior UI Engineer — Optimizely",
     subtitle: "Design Team; Optimizely Design System (OUI) in React.",
-    meta: "Jun 2017 – Mar 2018 • SF Bay Area",
+    metaDate: "Jun 2017 – Mar 2018",
+    metaPlace: "SF Bay Area",
     points: [
       "Built React components and pattern library with Storybook and OUI",
       "Partnered with designers on A/B testing product UX and documentation",
@@ -83,7 +91,8 @@ const experiences = [
   {
     title: "Senior Frontend/UI Engineer — Gap Inc.",
     subtitle: "Internal tools and product UI; React + Angular 2.",
-    meta: "Nov 2016 – Jun 2017 • SF Bay Area",
+    metaDate: "Nov 2016 – Jun 2017",
+    metaPlace: "SF Bay Area",
     points: [
       "Implemented product UI with React/Angular2 and Sass",
       "Improved developer productivity via internal tooling and Spring CMS integrations",
@@ -92,7 +101,8 @@ const experiences = [
   {
     title: "Senior Frontend Engineer — Williams-Sonoma",
     subtitle: "Frontend for six brands across desktop and mobile web.",
-    meta: "Aug 2016 – Nov 2016 • SF Bay Area",
+    metaDate: "Aug 2016 – Nov 2016",
+    metaPlace: "SF Bay Area",
     points: [
       "Enhanced storefront UI performance and responsiveness",
       "Supported rollout of new UI technologies across teams",
@@ -101,7 +111,8 @@ const experiences = [
   {
     title: "Fullstack Developer — Autodesk",
     subtitle: "E-commerce updates and dependency migrations with Node/JS.",
-    meta: "Jan 2016 – Jul 2016 • SF Bay Area",
+    metaDate: "Jan 2016 – Jul 2016",
+    metaPlace: "SF Bay Area",
     points: [
       "Modernized codebase with BDD testing; improved frontend UX and payments",
       "Worked across JavaScript, jQuery, Sass, and PayPal integrations",
@@ -110,7 +121,8 @@ const experiences = [
   {
     title: "Fullstack JS Developer Fellow — Code for America",
     subtitle: "Civic tech web apps for urban farming initiatives.",
-    meta: "Jan 2015 – Dec 2015 • SF Bay Area",
+    metaDate: "Jan 2015 – Dec 2015",
+    metaPlace: "SF Bay Area",
     points: [
       "Led design, prototyping, and user testing with Flask, AngularJS, and Postgres",
       "Shipped three web apps raising awareness for urban agriculture",
@@ -123,6 +135,7 @@ const projects = [
     title: "Palette.fm redesign",
     subtitle:
       "Reimagined the colorization flow with playful UI, saved 2.4s on average task time.",
+    url: "https://inaki.github.io/docstree/",
   },
   {
     title: "Motion Lab",
@@ -151,10 +164,34 @@ const skills = [
   "CI/CD",
 ];
 
-const Hero = () => (
-  <section id="hero" className="scroll-mt-28">
-    <div className="mx-auto flex max-w-5xl flex-col gap-10 px-4 pb-14 pt-10 sm:pt-14">
-      <div className="flex flex-col gap-6 rounded-funky border border-ink/20 bg-white/80 p-6 shadow-card sm:flex-row sm:items-center sm:justify-between">
+type HireStatus = "for-hire" | "not-hiring";
+
+const Hero = ({
+  hireStatus,
+  setHireStatus,
+}: {
+  hireStatus: HireStatus;
+  setHireStatus: (s: HireStatus) => void;
+}) => (
+  <section id="hero" data-testid="section-hero" className="scroll-mt-28">
+    <div className="relative mx-auto flex max-w-5xl flex-col gap-10 px-4 pb-14 pt-10 sm:pt-14">
+      <div className="relative flex flex-col gap-6 rounded-funky border border-ink/20 bg-white/80 p-6 shadow-card sm:flex-row sm:items-center sm:justify-between">
+        <motion.button
+          onClick={() =>
+            setHireStatus(hireStatus === "for-hire" ? "not-hiring" : "for-hire")
+          }
+          className={`absolute -right-3 top-[-10px] z-10 rounded-full border-2 px-3 py-2 text-xs font-bold uppercase tracking-[0.16em] shadow-card transition hover:-translate-y-0.5 whitespace-nowrap ${
+            hireStatus === "for-hire"
+              ? "border-ink bg-mint text-ink"
+              : "border-lemon bg-ink text-lemon"
+          }`}
+          animate={{
+            rotate: hireStatus === "for-hire" ? -8 : 8,
+            scale: hireStatus === "for-hire" ? 1.06 : 1.02,
+          }}
+        >
+          {hireStatus === "for-hire" ? "For hire" : "Not for hire"}
+        </motion.button>
         <div className="flex items-center gap-4">
           <div className="h-16 w-16 rounded-[14px] border-2 border-ink bg-gradient-to-br from-mint via-lemon to-coral shadow-card" />
           <div>
@@ -244,11 +281,18 @@ const Hero = () => (
 );
 
 function App() {
+  const [hireStatus, setHireStatus] = useState<HireStatus>("not-hiring");
+  const [showAllExperiences, setShowAllExperiences] = useState(false);
+
+  const visibleExperiences = showAllExperiences
+    ? experiences
+    : experiences.slice(0, 4);
+
   return (
     <div className="noise">
       <Navbar sections={sections} />
       <main className="pb-16">
-        <Hero />
+        <Hero hireStatus={hireStatus} setHireStatus={setHireStatus} />
         <Section
           id="about"
           badge="About"
@@ -323,12 +367,12 @@ function App() {
           title="Where I’ve shipped and led teams."
         >
           <div className="grid gap-4 sm:grid-cols-2">
-            {experiences.map((exp) => (
+            {visibleExperiences.map((exp) => (
               <Card
                 key={exp.title}
                 title={exp.title}
                 subtitle={exp.subtitle}
-                meta={exp.meta}
+                metaLines={{ line1: exp.metaDate, line2: exp.metaPlace }}
               >
                 <ul className="mt-2 space-y-1">
                   {exp.points.map((point) => (
@@ -341,6 +385,16 @@ function App() {
               </Card>
             ))}
           </div>
+          {experiences.length > 4 && (
+            <div className="mt-4 flex justify-center">
+              <button
+                onClick={() => setShowAllExperiences(!showAllExperiences)}
+                className="rounded-full border-2 border-ink bg-lemon px-4 py-2 text-sm font-semibold text-ink shadow-card transition hover:-translate-y-0.5"
+              >
+                {showAllExperiences ? "Show less" : "Show more"}
+              </button>
+            </div>
+          )}
         </Section>
 
         <Section
@@ -352,9 +406,20 @@ function App() {
             {projects.map((project) => (
               <Card key={project.title} title={project.title}>
                 <p>{project.subtitle}</p>
-                <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-ink/15 bg-ink text-lemon px-3 py-1 text-xs font-semibold">
-                  View case study →
-                </div>
+                {project.url ? (
+                  <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-3 inline-flex items-center gap-2 rounded-full border border-ink/15 bg-ink text-lemon px-3 py-1 text-xs font-semibold transition hover:-translate-y-0.5"
+                  >
+                    View case study →
+                  </a>
+                ) : (
+                  <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-ink/15 bg-ink text-lemon px-3 py-1 text-xs font-semibold">
+                    View case study →
+                  </div>
+                )}
               </Card>
             ))}
           </div>
