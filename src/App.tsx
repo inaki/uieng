@@ -166,24 +166,15 @@ const skills = [
 
 type HireStatus = "for-hire" | "not-hiring";
 
-const Hero = ({
-  hireStatus,
-  setHireStatus,
-}: {
-  hireStatus: HireStatus;
-  setHireStatus: (s: HireStatus) => void;
-}) => (
+const Hero = ({ hireStatus }: { hireStatus: HireStatus }) => (
   <section id="hero" data-testid="section-hero" className="scroll-mt-28">
     <div className="relative mx-auto flex max-w-5xl flex-col gap-10 px-4 pb-14 pt-10 sm:pt-14">
       <div className="relative flex flex-col gap-6 rounded-funky border border-ink/20 bg-white/80 p-6 shadow-card sm:flex-row sm:items-center sm:justify-between">
         <motion.button
-          onClick={() =>
-            setHireStatus(hireStatus === "for-hire" ? "not-hiring" : "for-hire")
-          }
           className={`absolute -right-3 top-[-10px] z-10 rounded-full border-2 px-3 py-2 text-xs font-bold uppercase tracking-[0.16em] shadow-card transition hover:-translate-y-0.5 whitespace-nowrap ${
             hireStatus === "for-hire"
               ? "border-ink bg-mint text-ink"
-              : "border-lemon bg-ink text-lemon"
+              : "border-ink bg-mint text-ink"
           }`}
           animate={{
             rotate: hireStatus === "for-hire" ? -8 : 8,
@@ -193,7 +184,7 @@ const Hero = ({
           {hireStatus === "for-hire" ? "For hire" : "Not for hire"}
         </motion.button>
         <div className="flex items-center gap-4">
-          <div className="h-16 w-16 rounded-[14px] border-2 border-ink bg-gradient-to-br from-mint via-lemon to-coral shadow-card" />
+          <div className="hidden h-16 w-16 rounded-[14px] border-2 border-ink bg-gradient-to-br from-mint via-lemon to-coral shadow-card sm:block" />
           <div>
             <p className="text-xs uppercase tracking-[0.2em] text-ink/70">
               Senior UI Engineer @ RunLLM
@@ -208,7 +199,7 @@ const Hero = ({
             </p>
           </div>
         </div>
-        <div className="flex flex-nowrap items-center gap-2 sm:gap-3">
+        <div className="flex flex-wrap items-center gap-2 sm:flex-nowrap sm:gap-3">
           <button
             onClick={() => scrollToSection("contact")}
             className="rounded-full border-2 border-ink bg-coral px-4 py-2 text-sm font-semibold text-ink shadow-card transition hover:-translate-y-0.5 whitespace-nowrap"
@@ -217,7 +208,7 @@ const Hero = ({
           </button>
 
           <a
-            className="rounded-full border border-ink bg-ink px-4 py-2 text-sm font-semibold text-lemon shadow-card transition hover:-translate-y-0.5"
+            className="rounded-full border border-ink bg-lemon px-4 py-2 text-sm font-semibold text-ink shadow-card transition hover:-translate-y-0.5"
             href="https://www.linkedin.com/in/inaki-aranzadi/"
             target="_blank"
             rel="noreferrer"
@@ -292,7 +283,7 @@ function App() {
     <div className="noise">
       <Navbar sections={sections} />
       <main className="pb-16">
-        <Hero hireStatus={hireStatus} setHireStatus={setHireStatus} />
+        <Hero hireStatus={hireStatus} />
         <Section
           id="about"
           badge="About"
